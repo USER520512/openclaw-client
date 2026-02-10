@@ -163,3 +163,72 @@
 .secondary-btn:hover {
   background: rgba(255, 255, 255, 0.15);
 }
+
+.next-steps-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}
+
+.gateway-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.gateway-status.starting {
+  background: rgba(102, 126, 234, 0.1);
+  border: 1px solid rgba(102, 126, 234, 0.3);
+  color: #93a3f8;
+}
+
+.gateway-status.running {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34d399;
+}
+
+.gateway-status.error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.gateway-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(147, 163, 248, 0.3);
+  border-top-color: #93a3f8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.gateway-check {
+  color: #34d399;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.gateway-error-icon {
+  color: #f87171;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}

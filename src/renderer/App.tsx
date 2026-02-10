@@ -8,12 +8,13 @@ import './App.css'
 
 type Step = 'welcome' | 'system-check' | 'install' | 'complete'
 
-interface SystemInfo {
+export interface SystemInfo {
   platform: string
   arch: string
   memory: number
   cpu: string
   nodeVersion: string
+  openclawVersion: string
 }
 
 function App() {
@@ -21,16 +22,19 @@ function App() {
   const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null)
   const [installProgress, setInstallProgress] = useState(0)
   const [installStatus, setInstallStatus] = useState('')
+  const [installError, setInstallError] = useState('')
 
   useEffect(() => {
-    window.electronAPI?.getPlatform().then((platform: string) => {
-      setSystemInfo({
-        platform,
-        arch: process.arch,
-        memory: 0,
-        cpu: '',
-        nodeVersion: process.version
-      })
+    window.electronAPI?.getSystemInfo().then((info: SystemInfo) => {
+      setSystemInfo(info)
+    })
+  }, [])
+
+  // 监听安装进度
+  useEffect(() => {
+    window.electronAPI?.onInstallProgress((data: { progress: number; message: string }) => {
+      setInstallProgress(data.progress)
+      setInstallStatus(data.message)
     })
   }, [])
 
@@ -52,12 +56,20 @@ function App() {
 
   const handleInstall = async () => {
     setCurrentStep('install')
-    for (let i = 0; i <= 100; i += 5) {
-      await new Promise(resolve => setTimeout(resolve, 100))
-      setInstallProgress(i)
-      setInstallStatus(i < 30 ? '下载组件...' : i < 60 ? '安装依赖...' : i < 90 ? '配置中...' : '完成!')
+    setInstallProgress(0)
+    setInstallStatus('准备中...')
+    setInstallError('')
+
+    try {
+      const result = await window.electronAPI?.installOpenClaw()
+      if (result?.success) {
+        setCurrentStep('complete')
+      } else {
+        setInstallError(result?.error || '安装失败，请检查网络连接后重试')
+      }
+    } catch {
+      setInstallError('安装过程发生异常')
     }
-    setCurrentStep('complete')
   }
 
   return (
@@ -81,6 +93,8 @@ function App() {
           <InstallStep 
             progress={installProgress}
             status={installStatus}
+            error={installError}
+            onRetry={handleInstall}
           />
         )}
         

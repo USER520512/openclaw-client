@@ -117,3 +117,35 @@
   border-radius: 3px;
   transition: width 0.3s ease;
 }
+
+.progress-bar.error {
+  stroke: #ef4444;
+}
+
+.error-text {
+  color: #f87171 !important;
+}
+
+.retry-container {
+  margin-top: 20px;
+}
+
+.retry-container .primary-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.retry-container .primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+}
