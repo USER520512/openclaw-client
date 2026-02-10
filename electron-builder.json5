@@ -1,0 +1,23 @@
+{
+  "appId": "ai.openclaw.client",
+  "productName": "OpenClaw",
+  "directories": {
+    "output": "dist/exe"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "mac": {
+    "category": "public.app-category.developer-tools",
+    "sign": false
+  },
+  "win": {
+    "target": "nsis",
+    "sign": false
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true
+  }
+}
